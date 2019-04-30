@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { View, Text } from "react-native";
-import firebase from "firebase";
+import React, { Component } from 'react';
+import { View } from 'react-native';
+import firebase from 'firebase';
 import {
   API_KEY,
   AUTH_DOMAIN,
@@ -8,8 +8,9 @@ import {
   PROJECT_ID,
   STORAGE_BUCKET,
   MESSAGING_SENDER_ID
-} from "react-native-dotenv";
-import { Header } from "./components/common";
+} from 'react-native-dotenv';
+import { Header } from './components/common';
+import LoginForm from './components/LoginForm';
 
 class App extends Component {
   componentWillMount() {
@@ -27,7 +28,7 @@ class App extends Component {
     return (
       <View>
         <Header headerText="Authentication" />
-        <Text>An Authentication App</Text>
+        <LoginForm />
       </View>
     );
   }
