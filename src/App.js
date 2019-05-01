@@ -9,25 +9,13 @@ import {
   STORAGE_BUCKET,
   MESSAGING_SENDER_ID
 } from 'react-native-dotenv';
-import { Header } from './components/common';
+import { Header, Button, Spinner, CardSection, Card } from './components/common';
 import LoginForm from './components/LoginForm';
 
 class App extends Component {
+  state = { loggedIn: null };
+
   componentWillMount() {
-    console.log(
-      'api key: ',
-      API_KEY,
-      '\nAuth Domain: ',
-      AUTH_DOMAIN,
-      '\nDatabase URL: ',
-      DATABASE_URL,
-      '\nProject ID: ',
-      PROJECT_ID,
-      '\nStorage Bucket: ',
-      STORAGE_BUCKET,
-      '\nMessaging sender id: ',
-      MESSAGING_SENDER_ID
-    );
     firebase.initializeApp({
       apiKey: API_KEY,
       authDomain: AUTH_DOMAIN,
@@ -36,13 +24,42 @@ class App extends Component {
       storageBucket: STORAGE_BUCKET,
       messagingSenderId: MESSAGING_SENDER_ID
     });
+
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.setState({ loggedIn: true });
+      } else {
+        this.setState({ loggedIn: false });
+      }
+    });
+  }
+
+  renderContent() {
+    switch (this.state.loggedIn) {
+      case true:
+        return (
+          <Card>
+            <CardSection>
+              <Button onPress={() => firebase.auth().signOut()}>Log Out</Button>
+            </CardSection>
+          </Card>
+        );
+      case false:
+        return <LoginForm />;
+      default:
+        return (
+          <CardSection>
+            <Spinner size="large" />
+          </CardSection>
+        );
+    }
   }
 
   render() {
     return (
       <View>
         <Header headerText="Authentication" />
-        <LoginForm />
+        {this.renderContent()}
       </View>
     );
   }
