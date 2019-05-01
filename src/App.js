@@ -14,6 +14,20 @@ import LoginForm from './components/LoginForm';
 
 class App extends Component {
   componentWillMount() {
+    console.log(
+      'api key: ',
+      API_KEY,
+      '\nAuth Domain: ',
+      AUTH_DOMAIN,
+      '\nDatabase URL: ',
+      DATABASE_URL,
+      '\nProject ID: ',
+      PROJECT_ID,
+      '\nStorage Bucket: ',
+      STORAGE_BUCKET,
+      '\nMessaging sender id: ',
+      MESSAGING_SENDER_ID
+    );
     firebase.initializeApp({
       apiKey: API_KEY,
       authDomain: AUTH_DOMAIN,
